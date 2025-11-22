@@ -1,0 +1,62 @@
+-----------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/gal.lagelpibuxade/Desktop/Assignment7/analysis 2008 08 21.log
+  log type:  text
+ opened on:  22 Nov 2025, 15:30:38
+
+. 
+. *STEP 5: produce tables
+. 
+. *use "combined\ghhs cell means.dta", clear
+. 
+. cd "/Users/gal.lagelpibuxade/Desktop/Assignment7"
+/Users/gal.lagelpibuxade/Desktop/Assignment7
+
+. use assignment7.dta, clear
+
+. 
+. egen clust = group(yearat14 nireland)
+
+. 
+. 
+. 
+. *****************************
+. *keep if agelfted<=18
+. *keep if age<=60
+. *keep if (datyear<=98 & nireland==0) | (datyear<=99 & nireland==1)  
+. *****************************
+.   
+. 
+. 
+. * tables 1 and 2
+. 
+. xi: reg agelfted yearat14 yearat14_2 yearat14_3 yearat14_4 drop15 if nireland== 0 & missing_earn==0
+>  [fw=wght], cluster(clust)
+
+Linear regression                               Number of obs     =     73,954
+                                                F(5, 30)          =    1225.89
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0356
+                                                Root MSE          =     2.9683
+
+                                 (Std. err. adjusted for 31 clusters in clust)
+------------------------------------------------------------------------------
+             |               Robust
+    agelfted | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    yearat14 |  -5.379202   1.695373    -3.17   0.003    -8.841616   -1.916787
+  yearat14_2 |   .1671627   .0503685     3.32   0.002     .0642966    .2700288
+  yearat14_3 |   -.002261   .0006539    -3.46   0.002    -.0035963   -.0009256
+  yearat14_4 |   .0000114   3.14e-06     3.62   0.001     4.95e-06    .0000178
+      drop15 |   .4947526   .0738786     6.70   0.000     .3438724    .6456328
+       _cons |   78.37694   21.01904     3.73   0.001     35.45034    121.3035
+------------------------------------------------------------------------------
+
+. outreg drop15 using table1, replace bdec(3) se bracket 3aster ctitle("britain poly=3")
+varlist not allowed
+r(101);
+
+end of do-file
+
+r(101);
+
